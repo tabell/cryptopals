@@ -23,7 +23,7 @@ void xor(
         uint8_t *out,
         size_t len);
 
-int decode_repeating_xor(
+int single_xor(
         uint8_t *in,
         uint8_t *out,
         size_t len,
@@ -33,3 +33,10 @@ int key_search(
         uint8_t *ct,
         size_t len,
         list_node_t **results);
+
+int repeating_xor(
+        uint8_t *in,
+        uint8_t *out,
+        size_t msg_len,
+        char *key,
+        size_t key_len);

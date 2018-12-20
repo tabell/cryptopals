@@ -1,12 +1,5 @@
-#include <stdint.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <sys/fcntl.h>
 
+#include "file.h"
 #include "common.h"
 #include "list.h"
 #include "score.h"
@@ -15,34 +8,10 @@
 
 int ex4(void)
 {
-    int fd = -1;
-    if (0 > (fd = open("ex4.data", 0))) {
-        log("error %d opening %s: %s", errno, DATA_PATH, strerror(errno));
-        return -errno;
-    }
-
-    struct stat statbuf = {0};
-    if (0 != fstat(fd, &statbuf)) {
-        log("error %d stating %s: %s", errno, DATA_PATH, strerror(errno));
-        return -errno;
-    }
-
-    char *buf = malloc(statbuf.st_size);
-    if (!buf) {
-        errno = ENOMEM;
-        log("error %d allocating %lu bytes: %s", errno, statbuf.st_size, strerror(errno));
-        return -errno;
-    }
-
+    unsigned char *buf = NULL;
     int ret;
-    if (statbuf.st_size > (ret = read(fd, buf, statbuf.st_size))) {
-        if (ret > 0) {
-            log("only read %d bytes", ret);
-            return -EIO;
-        } else {
-            log("error %d reading from %s: %s", errno, DATA_PATH, strerror(errno));
-            return -errno;
-        }
+    if (0 != (ret = file_read_alloc(DATA_PATH, &buf))) {
+        return ret;
     }
 
     char *ct_h = strtok(buf, "\n");
@@ -55,20 +24,22 @@ int ex4(void)
 
     list_node_t *results = NULL;
     while (ct_h != NULL) {
-        log("trying to decode: %s", ct_h);
-
+        fprintf(stderr,".");
         /* convert ascii hex to bytes */
         decode_hex(ct_h, ct);
 
         key_search(ct, len, &results); /* Append results */
         ct_h = strtok(NULL, "\n"); /* Not thread safe */
     }
+    printf("\n");
 
     score_t *winner = NULL;
     if (NULL != (winner = (score_t*)results)) {
-        decode_repeating_xor(winner->ct, pt, len, winner->key);
-        printf("%s\nDecoded from %s using (%d) %c\n",
-                pt, winner->ct, winner->key, isprint(winner->key) ? winner->key : ' ');
+        single_xor(winner->ct, pt, len, winner->key);
+        char cth[len*2];
+        encode_hex(winner->ct, len, cth);
+        printf("Decoded %s using (%c) 0x%x\n%s\n",
+                cth, isprint(winner->key) ? winner->key : ' ', winner->key, pt);
     }
 
 

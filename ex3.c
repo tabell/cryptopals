@@ -28,7 +28,7 @@ int ex3(void)
 
     score_t *winner = NULL;
     if (NULL != (winner = (score_t*)results)) {
-        decode_repeating_xor(winner->ct, pt, len, winner->key);
+        single_xor(winner->ct, pt, len, winner->key);
         printf("%s\nDecoded using (%d) %c\n", pt, winner->key, isprint(winner->key) ? winner->key : ' ');
     }
 

@@ -9,8 +9,9 @@ void encode_hex(
         unsigned char* out)
 {
     for (size_t off = 0; off < in_len; off++) {
-        snprintf(out+(2*off), 3, "%2x", *(in+off));
+        snprintf(out+(2*off), 3, "%.2x", *(in+off));
     }
+    out[2*in_len - 1] = '\0';
 }
 void decode_hex(
         unsigned char *in,
@@ -35,7 +36,22 @@ void xor(
     }
 }
 
-int decode_repeating_xor(
+int repeating_xor(
+        uint8_t *in,
+        uint8_t *out,
+        size_t msg_len,
+        char *key,
+        size_t key_len)
+{
+    char keystr[msg_len];
+    for (int i = 0; i < msg_len; i++) {
+        keystr[i] = key[i % key_len];
+    }
+
+    xor(in, keystr, out, msg_len);
+    return 0;
+}
+int single_xor(
         uint8_t *in,
         uint8_t *out,
         size_t len,
@@ -67,7 +83,7 @@ int key_search(
 
     for (uint8_t key=0; key < 255; key++) {
         /* use key to decode to plaintext */
-        (void) decode_repeating_xor(ct, pt, len, key);
+        (void) single_xor(ct, pt, len, key);
 
         /* score pt to see if it's readable english */
         float s = score_sentence(pt, len);

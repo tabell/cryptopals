@@ -1,12 +1,12 @@
+#include <stdbool.h>
+
 #include "common.h"
-#include "ex1.h"
-#include "ex2.h"
-#include "ex3.h"
+#include "ex.h"
 
 typedef int (*ex_func)(void);
 
 ex_func ex_func_arr[65] = { NULL,
-    ex1, ex2, ex3, NULL, NULL, NULL, NULL, NULL,    /* 1  - 8 */
+    ex1, ex2, ex3, ex4, NULL, NULL, NULL, NULL,    /* 1  - 8 */
     NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, /* 9  - 16 */
     NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, /* 17 - 24 */
     NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, /* 25 - 32 */
@@ -20,26 +20,41 @@ int main(int argc, char *argv[])
 {
     printf("Cryptopals solutions\nAlex Bell\nMay 2018\n");
     int exercise = 1;
+    bool all = true;
     int arg;
     int ret = 0;
     if (argc > 1) {
         arg = strtoul(argv[1], NULL, 10);
         if ((arg > 0) && (arg < 100)) {
             exercise = arg;
+            all = false;
         }
     }
-    printf("Running exercise %d\n", exercise);
-    if (ex_func_arr[exercise] != NULL) {
-        ret = ex_func_arr[exercise]();
+
+    int start, stop;
+    if (all) {
+        start=1;
+        stop=64;
     } else {
-        ret = -ENOENT;
+        start = exercise;
+        stop = exercise;
     }
 
-    if (ret == 0) {
-        printf("Success\n");
-    } else {
-        printf("Error: %s", strerror(-ret));
+    for (exercise=start; exercise <= stop; exercise++) {
+
+        if (ex_func_arr[exercise] != NULL) {
+            printf("Running exercise %d\n", exercise);
+            ret = ex_func_arr[exercise]();
+            if (ret == 0) {
+                printf("Success\n");
+            } else {
+                printf("Error: %s", strerror(-ret));
+            }
+        } else {
+            ret = -ENOENT;
+        }
     }
+
 
     return 0;
 }

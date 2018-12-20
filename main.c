@@ -7,7 +7,7 @@
 typedef int (*ex_func)(void);
 
 ex_func ex_func_arr[65] = { NULL,
-    ex1, ex2, ex3, ex4, ex5, NULL, NULL, NULL,    /* 1  - 8 */
+    ex1, ex2, ex3, ex4, ex5, ex6, NULL, NULL,    /* 1  - 8 */
     NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, /* 9  - 16 */
     NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, /* 17 - 24 */
     NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, /* 25 - 32 */

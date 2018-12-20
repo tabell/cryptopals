@@ -23,4 +23,7 @@ list_node_t *list_next(
 int float_compare(
         list_node_t *a,
         list_node_t *b);
+
+list_node_t *list_remove_head(
+        list_node_t **list);
 #endif /* _ALEX_LIST_H */

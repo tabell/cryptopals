@@ -6,17 +6,19 @@
 
 #define DATA_PATH "ex4.data"
 
+
 int ex4(void)
 {
     unsigned char *buf = NULL;
     int ret;
-    if (0 != (ret = file_read_alloc(DATA_PATH, &buf))) {
+    size_t bytes;
+    if (0 != (ret = file_read_alloc(DATA_PATH, &buf, &bytes))) {
         return ret;
     }
 
     char *ct_h = strtok(buf, "\n");
     /* two ascii characters required per byte */
-    size_t len = strlen(ct_h) / 2;
+    size_t len = bytes / 2;
 
     uint8_t ct[len]; /* cyphertext, raw bytes */
     uint8_t pt[len+1]; /* plaintext, raw bytes */

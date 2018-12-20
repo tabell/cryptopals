@@ -1,2 +1,3 @@
-main: base64.c main.c ex1.c
-	gcc -ggdb -o cpals main.c base64.c ex1.c
+objects := $(wildcard *.c)
+main: $(objects)
+	gcc -O0 -ggdb -o cpals $(objects)

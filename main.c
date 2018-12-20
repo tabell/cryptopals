@@ -1,5 +1,20 @@
 #include "common.h"
 #include "ex1.h"
+#include "ex2.h"
+#include "ex3.h"
+
+typedef int (*ex_func)(void);
+
+ex_func ex_func_arr[65] = { NULL,
+    ex1, ex2, ex3, NULL, NULL, NULL, NULL, NULL,    /* 1  - 8 */
+    NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, /* 9  - 16 */
+    NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, /* 17 - 24 */
+    NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, /* 25 - 32 */
+    NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, /* 33 - 40 */
+    NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, /* 41 - 48 */
+    NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, /* 49 - 56 */
+    NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, /* 57 - 60 */
+};
 
 int main(int argc, char *argv[])
 {
@@ -14,13 +29,10 @@ int main(int argc, char *argv[])
         }
     }
     printf("Running exercise %d\n", exercise);
-    switch (exercise) {
-        case 1:
-            ret = ex1();
-            break;
-        default:
-            ret = -ENOENT;
-            break;
+    if (ex_func_arr[exercise] != NULL) {
+        ret = ex_func_arr[exercise]();
+    } else {
+        ret = -ENOENT;
     }
 
     if (ret == 0) {

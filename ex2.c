@@ -16,8 +16,8 @@ int ex2(void)
 
     char out_str[36];
 
-    hex_to_bytes(str_a, a);
-    hex_to_bytes(str_b, b);
+    decode_hex(str_a, a);
+    decode_hex(str_b, b);
 
     xor(a, b, out, sizeof(out));
 

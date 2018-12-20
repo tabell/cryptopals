@@ -1,7 +1,9 @@
 #include <ctype.h>
 #include "common.h"
+#include "list.h"
+#include "score.h"
 
-void bytes_to_hex(
+void encode_hex(
         uint8_t *in,
         size_t in_len,
         unsigned char* out)
@@ -10,7 +12,7 @@ void bytes_to_hex(
         snprintf(out+(2*off), 3, "%2x", *(in+off));
     }
 }
-void hex_to_bytes(
+void decode_hex(
         unsigned char *in,
         uint8_t *out)
 {
@@ -33,18 +35,51 @@ void xor(
     }
 }
 
-float score(
-        char* text,
-        size_t len)
+int decode_repeating_xor(
+        uint8_t *in,
+        uint8_t *out,
+        size_t len,
+        char key)
 {
-    float total = 0;
-    for (int i = 0; i < len; i++) {
-        total += (isalnum(text[i]) ? 1 : 0);
-        total += (isspace(text[i]) ? 1 : 0);
-        total += (iscntrl(text[i]) ? -5 : 0);
-        total += (ispunct(text[i]) ? -1 : 0);
+    /* key is single-char repeating */
+    char keystr[len];
+    memset(keystr, key, sizeof(keystr));
 
-    }
-    return (total / (float)len);
+    xor(in, keystr, out, len);
+    return 0;
 }
 
+int float_compare(
+        list_node_t *a,
+        list_node_t *b)
+{
+    float s1 = ((score_t*)a)->score;
+    float s2 = ((score_t*)b)->score;
+    return (s1 > s2) ? 1 : -1;
+}
+
+int key_search(
+        uint8_t *ct,
+        size_t len,
+        list_node_t **results)
+{
+    uint8_t pt[len]; /* plaintext, raw bytes */
+
+    for (uint8_t key=0; key < 255; key++) {
+        /* use key to decode to plaintext */
+        (void) decode_repeating_xor(ct, pt, len, key);
+
+        /* score pt to see if it's readable english */
+        float s = score_sentence(pt, len);
+
+        /* sort scores so we can take highest */
+        score_t *node = calloc(1, sizeof(score_t));
+        node->score = s;
+        node->key = key;
+        node->ct = malloc(len);
+        memcpy(node->ct, ct, len);
+        list_insert_sorted((list_node_t**)results, (list_node_t*)node, float_compare);
+    }
+
+    return 0;
+}

@@ -2,39 +2,6 @@
 #include "list.h"
 
 typedef int (*list_compare_fn_t)(list_node_t *a, list_node_t *b);
-#if 0
-void list_insert_sorted(
-        list_node_t **head,
-        list_node_t *new,
-        list_compare_fn_t compare)
-{
-    if (*head == NULL) return;
-
-    if (compare(*head, new) > 0) {
-        if (((*head)->next == NULL)) {
-            list_node_t *save = (*head)->next;
-            (*head)->next = new;
-            new->next = save;
-        } else {
-            list_node_t *iter = *head;
-            while (NULL != (iter = iter->next)) {
-                if (compare(iter, new) > 0) {
-                    list_node_t *save = iter->next;
-                    iter->next = new;
-                    new->next = save;
-                } else {
-                    new->next = iter;
-                }
-            }
-        }
-    } else {
-        new->next = *head;
-        *head = new;
-    }
-
-}
-#endif
-
 
 void list_insert_sorted(
         list_node_t **head,
@@ -83,3 +50,4 @@ list_node_t *list_next(
 {
     return list->next;
 }
+

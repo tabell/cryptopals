@@ -19,4 +19,8 @@ void list_append(
 
 list_node_t *list_next(
         list_node_t * list);
+
+int float_compare(
+        list_node_t *a,
+        list_node_t *b);
 #endif /* _ALEX_LIST_H */

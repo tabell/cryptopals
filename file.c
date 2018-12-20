@@ -43,3 +43,21 @@ int file_read_alloc(
     return 0;
 }
 
+int ice_file(
+        char *filename)
+{
+    unsigned char *buf;
+    int ret = file_read_alloc(filename, &buf);
+    if (ret) {
+        return ret;
+    }
+    size_t len = strlen(buf);
+    char out[len + 1];
+
+    repeating_xor(buf, out, len, "ICE", 3);
+    write(fileno(stdout), out, len);
+
+    free(buf);
+    return 0;
+}
+

@@ -13,24 +13,6 @@ void ice_str(
     repeating_xor(in, out, len, "ICE", 3);
     encode_hex(out, len, out_h);
 }
-int ice_file(
-        char *filename)
-{
-    unsigned char *buf;
-    int ret = file_read_alloc(filename, &buf);
-    if (!ret) {
-        return ret;
-    }
-    size_t len = strlen(buf);
-    char out[len + 1];
-
-    ice_str(buf, len+1, out);
-
-    printf("%s\n", out);
-
-    free(buf);
-    return 0;
-}
 
 int ex5(
         void)

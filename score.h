@@ -10,6 +10,7 @@ typedef struct score {
 } score_t;
 
 float score_sentence(
+        float* charmap,
         unsigned char* text,
         size_t len);
 

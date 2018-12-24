@@ -6,7 +6,8 @@
 
 #include "list.h"
 
-#define log(fmt, ...) printf("%s:%d: " fmt "\n",  __func__, __LINE__, __VA_ARGS__);
+#define log(fmt, ...) fprintf(stderr, fmt "\n", __VA_ARGS__);
+#define dbg(fmt, ...) fprintf(stderr, "%s:%d: " fmt "\n",  __func__, __LINE__, __VA_ARGS__);
 
 void encode_hex(
         uint8_t *in,

@@ -7,7 +7,7 @@
 typedef int (*ex_func)(void);
 
 ex_func ex_func_arr[65] = { NULL,
-    ex1, ex2, ex3, ex4, ex5, NULL, NULL, NULL,    /* 1  - 8 */
+    ex1, ex2, ex3, ex4, ex5, ex6, NULL, NULL,    /* 1  - 8 */
     NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, /* 9  - 16 */
     NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, /* 17 - 24 */
     NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, /* 25 - 32 */
@@ -19,7 +19,7 @@ ex_func ex_func_arr[65] = { NULL,
 
 int main(int argc, char *argv[])
 {
-    printf("Cryptopals solutions\nAlex Bell\nDecember 2018\n");
+    fprintf(stderr, "Cryptopals solutions\nAlex Bell\nDecember 2018\n");
     int exercise = 1;
     bool all = true;
     int arg;
@@ -44,12 +44,12 @@ int main(int argc, char *argv[])
     for (exercise=start; exercise <= stop; exercise++) {
 
         if (ex_func_arr[exercise] != NULL) {
-            printf("Running exercise %d\n", exercise);
+            fprintf(stderr, "Running exercise %d\n", exercise);
             ret = ex_func_arr[exercise]();
             if (ret == 0) {
-                printf("Success\n");
+                fprintf(stderr, "Success\n");
             } else {
-                printf("Error: %s", strerror(-ret));
+                fprintf(stderr, "Error: %s", strerror(-ret));
             }
         } else {
             ret = -ENOENT;

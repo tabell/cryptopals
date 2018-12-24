@@ -3,6 +3,7 @@
 
 typedef int (*list_compare_fn_t)(list_node_t *a, list_node_t *b);
 
+
 void list_insert_sorted(
         list_node_t **head,
         list_node_t *new,
@@ -49,5 +50,16 @@ list_node_t *list_next(
         list_node_t * list)
 {
     return list->next;
+}
+
+list_node_t *list_remove_head(
+        list_node_t **list)
+{
+    list_node_t *ret = *list;
+    if (ret) {
+        *list = ret->next;
+        ret->next = NULL;
+    }
+    return ret;
 }
 

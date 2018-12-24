@@ -7,7 +7,8 @@
 
 int file_read_alloc(
         char *filename,
-        unsigned char **mem)
+        unsigned char **mem,
+        size_t *size)
 {
     int fd = -1;
     if (0 > (fd = open(filename, 0))) {
@@ -32,13 +33,16 @@ int file_read_alloc(
     if (statbuf.st_size > (ret = read(fd, buf, statbuf.st_size))) {
         if (ret > 0) {
             log("only read %d bytes", ret);
-            return -EIO;
         } else {
             log("error %d reading from %s: %s", errno, filename, strerror(errno));
+            free(buf);
             return -errno;
         }
     }
 
+    if (size) {
+        *size = ret;
+    }
     *mem = buf;
     return 0;
 }
@@ -47,15 +51,15 @@ int ice_file(
         char *filename)
 {
     unsigned char *buf;
-    int ret = file_read_alloc(filename, &buf);
+    size_t bytes;
+    int ret = file_read_alloc(filename, &buf, &bytes);
     if (ret) {
         return ret;
     }
-    size_t len = strlen(buf);
-    char out[len + 1];
+    char out[bytes + 1];
 
-    repeating_xor(buf, out, len, "ICE", 3);
-    write(fileno(stdout), out, len);
+    repeating_xor(buf, out, bytes, "ICE", 3);
+    write(fileno(stdout), out, bytes);
 
     free(buf);
     return 0;

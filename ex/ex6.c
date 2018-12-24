@@ -1,7 +1,9 @@
-#include "common.h"
-#include "file.h"
-#include "hamming.h"
-#include "score.h"
+#include "lib/common.h"
+#include "lib/file.h"
+#include "lib/hamming.h"
+#include "lib/score.h"
+
+#define INFILE "data/6/ex6.raw.data"
 
 typedef struct key_list_t {
     list_node_t list;
@@ -48,9 +50,7 @@ int find_keysize(
     return ret;
 }
 
-
-#define INFILE "ex6.raw.data"
-int ex6(void)
+int main(void)
 {
     uint8_t *buf = NULL;
     int ret;

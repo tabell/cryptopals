@@ -1,5 +1,5 @@
-#include "common.h"
-#include "base64.h"
+#include "lib/common.h"
+#include "lib/base64.h"
 
 int hex_to_b64(
         char *hex,
@@ -20,7 +20,7 @@ int hex_to_b64(
     return 0;
 }
 
-int ex1(void) {
+int main(void) {
     char input[] = "49276d206b696c6c696e6720796f757220627261696e206c696b65206120706f69736f6e6f7573206d757368726f6f6d";
     char correct_out[] = "SSdtIGtpbGxpbmcgeW91ciBicmFpbiBsaWtlIGEgcG9pc29ub3VzIG11c2hyb29t";
     char output[512];

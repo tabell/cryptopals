@@ -4,12 +4,12 @@
 #include <ctype.h>
 #include <stdlib.h>
 
-#include "common.h"
-#include "list.h"
-#include "score.h"
+#include "lib/common.h"
+#include "lib/list.h"
+#include "lib/score.h"
 
 
-int ex3(void)
+int main(void)
 {
     char ct_h[] = "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736"; /* cyphertext, hex */
 

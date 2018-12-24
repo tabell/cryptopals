@@ -2,10 +2,10 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "common.h"
+#include "lib/common.h"
 
 
-int ex2(void)
+int main(void)
 {
     char* str_a = "1c0111001f010100061a024b53535009181c";
     char* str_b = "686974207468652062756c6c277320657965";

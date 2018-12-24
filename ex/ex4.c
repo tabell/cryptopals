@@ -1,13 +1,12 @@
+#include "lib/file.h"
+#include "lib/common.h"
+#include "lib/list.h"
+#include "lib/score.h"
 
-#include "file.h"
-#include "common.h"
-#include "list.h"
-#include "score.h"
-
-#define DATA_PATH "ex4.data"
+#define DATA_PATH "data/4/in"
 
 
-int ex4(void)
+int main(void)
 {
     unsigned char *buf = NULL;
     int ret;

@@ -1,8 +1,8 @@
 #include <unistd.h>
 #include <string.h>
 
-#include "common.h"
-#include "file.h"
+#include "lib/common.h"
+#include "lib/file.h"
 
 void ice_str(
         char *in,
@@ -14,7 +14,7 @@ void ice_str(
     encode_hex(out, len, out_h);
 }
 
-int ex5(
+int main(
         void)
 {
     char str1[] = "Burning 'em, if you ain't quick and nimble\nI go crazy when I hear a cymbal";

@@ -9,6 +9,12 @@
 #define log(fmt, ...) fprintf(stderr, fmt "\n", __VA_ARGS__);
 #define dbg(fmt, ...) fprintf(stderr, "%s:%d: " fmt "\n",  __func__, __LINE__, __VA_ARGS__);
 
+typedef struct key_list_t {
+    list_node_t list;
+    float ham_norm;
+    size_t keylen;
+} kl;
+
 void encode_hex(
         uint8_t *in,
         size_t in_len,
@@ -41,3 +47,7 @@ int repeating_xor(
         size_t msg_len,
         char *key,
         size_t key_len);
+
+int find_keysize(
+        uint8_t *in,
+        size_t len);

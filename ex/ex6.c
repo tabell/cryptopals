@@ -5,51 +5,6 @@
 
 #define INFILE "data/6/ex6.raw.data"
 
-typedef struct key_list_t {
-    list_node_t list;
-    float ham_norm;
-    size_t keylen;
-} kl;
-
-int comp_ham(list_node_t *a, list_node_t *b) {
-    return (((kl*)a)->ham_norm - ((kl*)b)->ham_norm) < 0 ? 1 : -1;
-}
-
-int find_keysize(
-        uint8_t *in,
-        size_t len)
-{
-    kl *list = NULL;
-    size_t lower=2, upper=60;
-    for (size_t keysize = lower; keysize <= upper; keysize++)
-    {
-        float ham = 0;
-        size_t blocks = len / keysize;
-        for (int i = 0; i < blocks; i++) {
-            ham += hamming(in + (keysize*i), in + (keysize*(i+1)), keysize);
-        }
-        ham /= (float)blocks;
-        float ham_norm = (float)ham / (float)keysize;
-        kl *item = calloc(1, sizeof (kl));
-        if (!item) break;
-        item->ham_norm = ham_norm;
-        item->keylen = keysize;
-        list_insert_sorted((list_node_t**)&list, (list_node_t*)item, comp_ham);
-    }
-    log("keysize = %lu bytes, smallest normalized hamming distance = %.2f",
-            list->keylen, list->ham_norm);
-    int ret = list->keylen;
-
-    /* Clean up memory */
-    kl *item = NULL;
-    while (NULL != (item = (kl*)list_remove_head((list_node_t**)&list))) {
-        free(item);
-        item = NULL;
-    }
-
-    return ret;
-}
-
 int main(void)
 {
     uint8_t *buf = NULL;

@@ -144,10 +144,11 @@ int comp_ham(list_node_t *a, list_node_t *b) {
 
 int find_keysize(
         uint8_t *in,
-        size_t len)
+        size_t len,
+        size_t lower,
+        size_t upper)
 {
     kl *list = NULL;
-    size_t lower=2, upper=60;
     for (size_t keysize = lower; keysize <= upper; keysize++)
     {
         float ham = 0;

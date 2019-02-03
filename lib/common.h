@@ -50,4 +50,6 @@ int repeating_xor(
 
 int find_keysize(
         uint8_t *in,
-        size_t len);
+        size_t len,
+        size_t lower,
+        size_t upper);

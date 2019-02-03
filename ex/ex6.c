@@ -15,7 +15,7 @@ int main(void)
         return 0;
     }
 
-    size_t keysize = find_keysize(buf, bytes);
+    size_t keysize = find_keysize(buf, bytes, 2, 60);
     dbg("trying keysize %ld", keysize);
     size_t block_count = bytes / keysize;
     uint8_t *block = NULL;

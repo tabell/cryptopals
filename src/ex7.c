@@ -38,6 +38,7 @@ int aes_dec(
 
 cleanup_ctx:
     EVP_CIPHER_CTX_free(ctx);
+    return 0;
 }
 int main(int argc, char** argv)
 {

@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "../file.h"
+#include "file.h"
 
 int main(
         int argc,
@@ -10,7 +10,6 @@ int main(
         return 0;
     }
 
-    unsigned char *buf = NULL;
     ice_file(argv[1]);
     return 0;
 }

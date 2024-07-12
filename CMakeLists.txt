@@ -1,5 +1,10 @@
 cmake_minimum_required(VERSION 3.10)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+set(CMAKE_VERBOSE_MAKEFILE ON)
+
+
 # Project name
 project(cryptopals)
 
@@ -8,6 +13,8 @@ if (NOT OPENSSL_FOUND)
     message(FATAL_ERROR "OpenSSL not found!")
 endif()
 
+include_directories("${OPENSSL_INCLUDE_DIR}")
+link_libraries("${OPENSSL_LIBRARIES}")
 
 # Set the C standard
 set(CMAKE_C_STANDARD 11)
@@ -33,5 +40,8 @@ foreach(BIN_SRC ${BIN_SOURCES})
     set_target_properties(${BIN_NAME} PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/build"
     )
+    target_compile_options(${BIN_NAME} PRIVATE -Wall)
+
 endforeach()
+
 

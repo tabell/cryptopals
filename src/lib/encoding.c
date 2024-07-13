@@ -1,4 +1,6 @@
 #include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 #include <stdint.h>
 
 /* Base64 in a nutshell:
@@ -43,3 +45,27 @@ int b64_enc(
 
     return 0;
 }
+
+void encode_hex(
+        uint8_t *in,
+        size_t in_len,
+        unsigned char* out)
+{
+    for (size_t off = 0; off < in_len; off++) {
+        snprintf(out+(2*off), 3, "%.2x", *(in+off));
+    }
+    out[2*in_len - 1] = '\0';
+}
+
+void decode_hex(
+        unsigned char *in,
+        uint8_t *out)
+{
+    int ret = 0;
+    size_t offset = 0;
+    while (0 < sscanf(in + offset*2, "%2hhx", out + offset))
+    {
+        offset++;
+    }
+}
+

@@ -1,24 +1,6 @@
 #include "lib/common.h"
-#include "lib/base64.h"
+#include "lib/encoding.h"
 
-int hex_to_b64(
-        char *hex,
-        char *b64)
-{
-    uint8_t in[3];
-    int ret;
-    int ic=0,oc=0;
-    /* read hex 8 "bytes" at a time and convert to uint32 */
-    while (0 < (ret = sscanf(hex, "%2hhx%2hhx%2hhx",  &in[0], &in[1], &in[2]))) {
-        ic++;
-        b64_enc(in, ret, b64);
-        hex += 2*ret;
-        b64 += ret + 1;
-    }
-    *b64 = '\0';
-
-    return 0;
-}
 
 int main(void) {
     char input[] = "49276d206b696c6c696e6720796f757220627261696e206c696b65206120706f69736f6e6f7573206d757368726f6f6d";

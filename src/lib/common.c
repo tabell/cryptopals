@@ -4,44 +4,17 @@
 #include "score.h"
 #include "hamming.h"
 
-void xor(
-        uint8_t *a,
-        uint8_t *b,
-        uint8_t *out,
-        size_t len)
-{
-    for (int x = 0; x < len; x++) {
-        out[x] = a[x] ^ b[x];
-    }
-}
+#define MIN(a,b) ((a) > (b) ? (b) : (a))
 
-int repeating_xor(
-        uint8_t *in,
-        uint8_t *out,
-        size_t msg_len,
-        char *key,
-        size_t key_len)
+int xor(uint8_t *a,   size_t a_len,
+        uint8_t *key, size_t key_len,
+        uint8_t *out, size_t out_len)
 {
-    char keystr[msg_len];
-    for (int i = 0; i < msg_len; i++) {
-        keystr[i] = key[i % key_len];
+    size_t len = MIN(a_len, out_len);
+    for (int i = 0; i < len; i++) {
+        out[i] = a[i] ^ key[i % key_len];
     }
 
-    xor(in, keystr, out, msg_len);
-    return 0;
-}
-
-int single_xor(
-        uint8_t *in,
-        uint8_t *out,
-        size_t len,
-        char key)
-{
-    /* key is single-char repeating */
-    char keystr[len];
-    memset(keystr, key, sizeof(keystr));
-
-    xor(in, keystr, out, len);
     return 0;
 }
 
@@ -88,6 +61,7 @@ void build_charmap(
     charmap['z'] = 0.074;  charmap['Z'] = 0.074;
 }
 
+// single letter xor key search
 int key_search(
         uint8_t *ct,
         size_t len,
@@ -99,7 +73,7 @@ int key_search(
 
     for (uint8_t key=0; key < 255; key++) {
         /* use key to decode to plaintext */
-        (void) single_xor(ct, pt, len, key);
+        (void) xor(ct, len, &key, 1, pt, len);
 
         /* score pt to see if it's readable english */
         float s = score_sentence(charmap, pt, len);

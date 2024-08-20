@@ -24,29 +24,14 @@ void decode_hex(
         unsigned char *in,
         uint8_t *out);
 
-void xor(
-        uint8_t *a,
-        uint8_t *b,
-        uint8_t *out,
-        size_t len);
-
-int single_xor(
-        uint8_t *in,
-        uint8_t *out,
-        size_t len,
-        char key);
+int xor(uint8_t *a, size_t a_len,
+        uint8_t *key, size_t key_len,
+        uint8_t *out, size_t out_len);
 
 int key_search(
         uint8_t *ct,
         size_t len,
         list_node_t **results);
-
-int repeating_xor(
-        uint8_t *in,
-        uint8_t *out,
-        size_t msg_len,
-        char *key,
-        size_t key_len);
 
 int find_keysize(
         uint8_t *in,

@@ -36,7 +36,8 @@ int main(void)
 
     score_t *winner = NULL;
     if (NULL != (winner = (score_t*)results)) {
-        single_xor(winner->ct, pt, len, winner->key);
+        xor(winner->ct, sizeof(winner->ct), &winner->key, 1,  pt, len);
+
         char cth[len*2];
         encode_hex(winner->ct, len, cth);
         printf("Decoded %s using (%c) 0x%x\n%s\n",

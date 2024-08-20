@@ -1,9 +1,9 @@
 #include <stdlib.h>
 
 int b64_enc(
-	unsigned char *input,
+	char *input,
     size_t in_len,
-	unsigned char *output);
+	char *output);
 
 void encode_hex(
         uint8_t *in,

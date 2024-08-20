@@ -5,6 +5,8 @@
 
 #include "common.h"
 
+// calls stat to get size then allocates mem for entire file
+// returns 0 on success, negative errno on failure
 int file_read_alloc(
         char *filename,
         unsigned char **mem,
@@ -56,9 +58,10 @@ int ice_file(
     if (ret) {
         return ret;
     }
-    char out[bytes + 1];
+    uint8_t out[bytes + 1];
+    uint8_t *key = "ICE";
 
-    repeating_xor(buf, out, bytes, "ICE", 3);
+    xor(buf, bytes, key, 3, out, bytes);
     write(fileno(stdout), out, bytes);
 
     free(buf);

@@ -5,6 +5,8 @@
 
 #define INFILE "data/6/ex6.raw.data"
 
+// Challenge 6, break repeating key XOR
+
 int main(void)
 {
     uint8_t *buf = NULL;

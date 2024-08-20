@@ -1,3 +1,5 @@
+#include <assert.h>
+
 #include "lib/common.h"
 #include "lib/encoding.h"
 
@@ -9,9 +11,7 @@ int main(void) {
     int ret = hex_to_b64(input, output);
     printf("ret: %d\ninput: %s\noutput: %s\n",
             ret, input, output);
-	if (0 != strncmp(output, correct_out, strlen(correct_out))) {
-		printf("Something went wrong\n");
-	}
+    assert(0 == strncmp(output, correct_out, strlen(correct_out)));
     return 0;
 }
 

@@ -14,12 +14,10 @@ int main(void)
     uint8_t b[18] = { 0 };
     uint8_t out[18];
 
-    char out_str[36];
-
     decode_hex(str_a, a);
     decode_hex(str_b, b);
 
-    xor(a, b, out, sizeof(out));
+    xor(a, sizeof(a), b, sizeof(b), out, sizeof(out));
 
     for (int i=0; i < sizeof(out); i++) {
         printf("%c%c xor %c%c = %c\n",

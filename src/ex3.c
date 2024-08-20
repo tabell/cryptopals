@@ -28,7 +28,7 @@ int main(void)
 
     score_t *winner = NULL;
     if (NULL != (winner = (score_t*)results)) {
-        single_xor(winner->ct, pt, len, winner->key);
+        xor(winner->ct, sizeof(ct), &winner->key, 1, pt, sizeof(pt));
         printf("%s\nDecoded using (%d) %c\n", pt, winner->key, isprint(winner->key) ? winner->key : ' ');
     }
 

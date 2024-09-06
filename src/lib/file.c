@@ -9,7 +9,7 @@
 // returns 0 on success, negative errno on failure
 int file_read_alloc(
         char *filename,
-        unsigned char **mem,
+        char **mem,
         size_t *size)
 {
     int fd = -1;
@@ -52,7 +52,7 @@ int file_read_alloc(
 int ice_file(
         char *filename)
 {
-    unsigned char *buf;
+    char *buf;
     size_t bytes;
     int ret = file_read_alloc(filename, &buf, &bytes);
     if (ret) {

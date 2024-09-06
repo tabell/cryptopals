@@ -18,10 +18,10 @@ typedef struct key_list_t {
 void encode_hex(
         uint8_t *in,
         size_t in_len,
-        unsigned char* out);
+        char* out);
 
 void decode_hex(
-        unsigned char *in,
+        char *in,
         uint8_t *out);
 
 int xor(uint8_t *a, size_t a_len,

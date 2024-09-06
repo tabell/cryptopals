@@ -2,7 +2,7 @@
 
 int file_read_alloc(
         char *filename,
-        unsigned char **mem,
+        char **mem,
         size_t *len);
 
 int ice_file(

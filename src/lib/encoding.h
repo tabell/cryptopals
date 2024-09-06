@@ -8,12 +8,12 @@ int b64_enc(
 void encode_hex(
         uint8_t *in,
         size_t in_len,
-        unsigned char* out);
+        char* out);
 
 void decode_hex(
-        unsigned char *in,
+        char *in,
         uint8_t *out);
 
 int hex_to_b64(
-        const unsigned char *hex,
-        unsigned char *b64);
+        const char *hex,
+        char *b64);
